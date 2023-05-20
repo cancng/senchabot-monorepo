@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import {
   Container,
   CssBaseline,
@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./AppBar";
-import { darkTheme } from "../../utils/theme";
+import { darkTheme, landingDarkTheme, lightTheme } from "../../utils/theme";
 import Breadcrumb from "./Breadcrumb";
 import { useSession } from "next-auth/react";
 import Loading from "../loading/Loading";
 import VersionText from "../common/VersionText";
 import AuthContainer from "../auth/AuthContainer";
+import { useThemeStore } from "../../store/theme-store";
 
 type IProps = {
   isLoading: boolean;
@@ -28,8 +29,15 @@ const AppContainer: FC<IProps> = ({ isLoading, children }) => {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  const { darkMode } = useThemeStore();
+
+  const theme = useMemo(
+    () => (darkMode ? darkTheme : lightTheme),
+    [darkMode],
+  );
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Loading isLoading={isLoading} isAuthLoading={isAuthLoading} />
 

@@ -11,6 +11,7 @@ import DrawerButton from "./buttons/DrawerButton";
 import { useState } from "react";
 import AppDrawer from "../AppDrawer";
 import { FC } from "react";
+import ColorModeSwitch from "../ColorModeSwitch";
 
 type IResponsiveAppBarProps = {
   isDrawerOpen: boolean;
@@ -78,6 +79,7 @@ const ResponsiveAppBar: FC<IResponsiveAppBarProps> = ({
                 <MinimizeIcon />
               </IconButton>
             </Link>
+            <ColorModeSwitch />
             <AccountMenu />
           </Toolbar>
         </Container>

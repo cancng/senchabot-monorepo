@@ -16,6 +16,7 @@ import AppBarTitle from "../common/AppBarTitle";
 import LandingButton from "./LandingButton";
 import { AppBarStyles, MenuPaperPropsStyles } from "../../styles";
 import React, { useState } from "react";
+import ColorModeSwitch from "../app/ColorModeSwitch";
 
 const appBarMenuList = [
   { title: "Cookie Policy", path: "/cookie-policy" },
@@ -32,6 +33,7 @@ const toolBarStyles = {
 
 const LandingAppBar = () => {
   const { data: session } = useSession();
+
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,7 +48,7 @@ const LandingAppBar = () => {
     <>
       <AppBar
         position="sticky" // adds pb: 8
-        color="transparent"
+        color="primary"
         sx={AppBarStyles}
         elevation={0}>
         <Box sx={{ flexGrow: 1 }}>
@@ -88,25 +90,28 @@ const LandingAppBar = () => {
             </Menu>
             <AppBarTitle />
 
-            <LandingButton
-              href="/app"
-              sx={{
-                pl: 4,
-                color: "#646464",
-              }}
-              disableRipple>
-              {session ? (
-                <DashboardIcon
-                  sx={{
-                    backgroundColor: "#000",
-                    color: "#fff",
-                    "&:hover": { cursor: "pointer" },
-                  }}
-                />
-              ) : (
-                <AccountCircle sx={{ "&:hover": { cursor: "pointer" } }} />
-              )}
-            </LandingButton>
+            <Box>
+              <ColorModeSwitch />
+              <LandingButton
+                href="/app"
+                sx={{
+                  pl: 4,
+                  color: "#646464",
+                }}
+                disableRipple>
+                {session ? (
+                  <DashboardIcon
+                    sx={{
+                      // backgroundColor: "#000",
+                      color: "#fff",
+                      "&:hover": { cursor: "pointer" },
+                    }}
+                  />
+                ) : (
+                  <AccountCircle sx={{ "&:hover": { cursor: "pointer" } }} />
+                )}
+              </LandingButton>
+            </Box>
           </Toolbar>
         </Box>
       </AppBar>

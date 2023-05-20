@@ -87,6 +87,16 @@ export const landingDarkTheme = createTheme({
   },
 });
 
+export const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    background: {
+      //paper: "#FFF",
+      default: "#FFF",
+    },
+  },
+});
+
 // console.log(landingDarkTheme.palette.background.default);
 
 // landingDarkTheme.palette.background.default = "#ffff00";

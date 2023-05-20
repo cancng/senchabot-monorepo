@@ -32,7 +32,7 @@ const iconStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  bgcolor: "#000000",
+  // bgcolor: "#000000",
   mr: 1,
   "&:hover": {
     backgroundColor: "#0c0c0c",
