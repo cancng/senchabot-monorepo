@@ -17,17 +17,13 @@ const SystemMessage = () => {
   const discordServers = trpc.bot.getUserDiscordServers.useQuery();
 
   return (
-    <Paper
-      sx={{ mt: "10px", backgroundColor: "#000", padding: "10px" }}
-      elevation={1}>
+    <Paper sx={{ mt: "10px", padding: "10px" }} elevation={1}>
       <Stack>
         <List
           dense={false}
-          sx={{ width: "100%", backgroundColor: "#000" }}
+          sx={{ width: "100%" }}
           subheader={
-            <ListSubheader sx={{ backgroundColor: "#000" }} disableSticky>
-              System messages:
-            </ListSubheader>
+            <ListSubheader disableSticky>System messages:</ListSubheader>
           }
           disablePadding>
           {!discordServerCount.isLoading && !twitchChannelCount.isLoading ? (

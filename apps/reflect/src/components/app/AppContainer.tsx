@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import ResponsiveAppBar from "./AppBar";
-import { darkTheme, landingDarkTheme, lightTheme } from "../../utils/theme";
+import { darkTheme, lightTheme } from "../../utils/theme";
 import Breadcrumb from "./Breadcrumb";
 import { useSession } from "next-auth/react";
 import Loading from "../loading/Loading";
@@ -31,10 +31,7 @@ const AppContainer: FC<IProps> = ({ isLoading, children }) => {
 
   const { darkMode } = useThemeStore();
 
-  const theme = useMemo(
-    () => (darkMode ? darkTheme : lightTheme),
-    [darkMode],
-  );
+  const theme = useMemo(() => (darkMode ? darkTheme : lightTheme), [darkMode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,7 +46,7 @@ const AppContainer: FC<IProps> = ({ isLoading, children }) => {
           />
 
           <Container>
-            <Paper sx={{ mt: 10, backgroundColor: "#000", p: 1 }} elevation={1}>
+            <Paper sx={{ mt: 10, p: 1 }} elevation={1}>
               <Breadcrumb />
             </Paper>
             {children}

@@ -16,7 +16,6 @@ import AppBarTitle from "../common/AppBarTitle";
 import LandingButton from "./LandingButton";
 import { AppBarStyles, MenuPaperPropsStyles } from "../../styles";
 import React, { useState } from "react";
-import ColorModeSwitch from "../app/ColorModeSwitch";
 
 const appBarMenuList = [
   { title: "Cookie Policy", path: "/cookie-policy" },
@@ -90,28 +89,25 @@ const LandingAppBar = () => {
             </Menu>
             <AppBarTitle />
 
-            <Box>
-              <ColorModeSwitch />
-              <LandingButton
-                href="/app"
-                sx={{
-                  pl: 4,
-                  color: "#646464",
-                }}
-                disableRipple>
-                {session ? (
-                  <DashboardIcon
-                    sx={{
-                      // backgroundColor: "#000",
-                      color: "#fff",
-                      "&:hover": { cursor: "pointer" },
-                    }}
-                  />
-                ) : (
-                  <AccountCircle sx={{ "&:hover": { cursor: "pointer" } }} />
-                )}
-              </LandingButton>
-            </Box>
+            <LandingButton
+              href="/app"
+              sx={{
+                pl: 4,
+                color: "#646464",
+              }}
+              disableRipple>
+              {session ? (
+                <DashboardIcon
+                  sx={{
+                    // backgroundColor: "#000",
+                    color: "#fff",
+                    "&:hover": { cursor: "pointer" },
+                  }}
+                />
+              ) : (
+                <AccountCircle sx={{ "&:hover": { cursor: "pointer" } }} />
+              )}
+            </LandingButton>
           </Toolbar>
         </Box>
       </AppBar>

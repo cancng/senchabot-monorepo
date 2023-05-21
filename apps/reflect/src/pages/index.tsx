@@ -1,27 +1,19 @@
-import React, { useMemo } from "react";
+import React from "react";
 import type { NextPage } from "next";
 import { ThemeProvider } from "@mui/material/styles";
-import { landingDarkTheme, lightTheme } from "../utils/theme";
 import { CssBaseline } from "@mui/material";
 import Header from "../components/common/Header";
 import LandingAppBar from "../components/landing/LandingAppBar";
 import LandingTexts from "../components/landing/LandingTexts";
 import LandingFooter from "../components/landing/LandingFooter";
 import VersionText from "src/components/common/VersionText";
-import { useThemeStore } from "../store/theme-store";
+import { landingDarkTheme } from "../utils/theme";
 
 const Landing: NextPage = () => {
-  const { darkMode } = useThemeStore();
-
-  const theme = useMemo(
-    () => (darkMode ? landingDarkTheme : lightTheme),
-    [darkMode],
-  );
-
   return (
     <>
       <Header title="Landing" index={true} />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={landingDarkTheme}>
         <CssBaseline />
         <LandingAppBar />
         <LandingTexts />

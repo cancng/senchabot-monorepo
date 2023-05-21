@@ -31,19 +31,13 @@ export const darkTheme = createTheme({
   },
   palette: {
     mode: "dark",
+    background: {
+      paper: "#000",
+    },
     primary: {
       main: "#1976d2",
     },
   },
-  // components: {
-  //     MuiCssBaseline: {
-  //         styleOverrides: {
-  //             root: {
-  //                 backgroundColor: '#000'
-  //             },
-  //         },
-  //     },
-  // },
 });
 
 export const landingDarkTheme = createTheme({
@@ -91,7 +85,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     background: {
-      //paper: "#FFF",
+      paper: "#FFF",
       default: "#FFF",
     },
   },

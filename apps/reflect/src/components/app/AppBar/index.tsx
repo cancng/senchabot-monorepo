@@ -49,10 +49,10 @@ const ResponsiveAppBar: FC<IResponsiveAppBarProps> = ({
       />
       <AppBar
         position="fixed"
-        color="transparent"
+        color="default"
         sx={{
           backdropFilter: "blur(4px)",
-          backgroundColor: alpha(theme.palette.background.paper, 0.85),
+          backgroundColor: alpha(theme.palette.background.default, 0.85),
         }}
         elevation={2}>
         <Container>
