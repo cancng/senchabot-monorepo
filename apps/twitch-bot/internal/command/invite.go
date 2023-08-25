@@ -2,51 +2,53 @@ package command
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/gempir/go-twitch-irc/v3"
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/client"
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/internal/models"
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/server"
+	"github.com/senchabot-opensource/monorepo/packages/gosenchabot"
+	"github.com/senchabot-opensource/monorepo/packages/gosenchabot/models"
 )
 
-func InviteCommand(client *client.Clients, server *server.SenchabotAPIServer, message twitch.PrivateMessage, commandName string, params []string) {
+func (c *commands) InviteCommand(context context.Context, message twitch.PrivateMessage, commandName string, params []string) (*models.CommandResponse, error) {
+	var cmdResp models.CommandResponse
+
 	if message.Channel != "senchabot" {
-		return
+		return nil, errors.New("command did not executed in senchabot")
 	}
 
 	if len(params) < 1 {
-		client.Twitch.Say(message.Channel, "!invite [your_channel_name]")
-		return
+		cmdResp.Message = "!invite [your_channel_name]"
+		return &cmdResp, nil
 	}
 
 	var channelName = message.User.Name
 	if strings.ToLower(params[0]) != channelName {
-		client.Twitch.Say(message.Channel, "You need to specify your channel name. !invite "+channelName)
-		return
+		cmdResp.Message = "You need to specify your channel name. !invite " + channelName
+		return &cmdResp, nil
 	}
 
 	var twitchChannelId = message.User.ID
-	alreadyJoined, err := server.CreateTwitchChannel(context.Background(), twitchChannelId, channelName)
+	alreadyJoined, err := c.service.CreateTwitchChannel(context, twitchChannelId, channelName, nil)
 	if err != nil {
-		fmt.Println("(CreateTwitchChannel) Error:", err)
-		return
+		return nil, errors.New("(CreateTwitchChannel) Error: " + err.Error())
 	}
 
 	if alreadyJoined {
-		return
+		return nil, errors.New("already joined")
 	}
 
 	fmt.Println("TRYING TO JOIN TWITCH CHANNEL `" + channelName + "`")
-	client.Twitch.Join(channelName)
-	optionalCommands := models.GetOptionalCommands()
+	c.client.Twitch.Join(channelName)
+	optionalCommands := gosenchabot.GetOptionalCommands()
 	for _, command := range optionalCommands {
-		_, err := server.CreateBotCommand(context.Background(), command.CommandName, command.CommandContent, twitchChannelId, "Senchabot")
+		_, err := c.service.CreateBotCommand(context, command.CommandName, command.CommandContent, twitchChannelId, "Senchabot")
 		if err != nil {
 			fmt.Println(err.Error())
 		}
 	}
 
-	client.Twitch.Say(message.Channel, "I joined your Twitch channel, sweetie")
+	cmdResp.Message = "I joined your Twitch channel, sweetie"
+	return &cmdResp, nil
 }

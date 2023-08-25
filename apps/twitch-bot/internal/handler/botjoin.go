@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/client"
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/internal/models"
-	"github.com/senchabot-dev/monorepo/apps/twitch-bot/server"
+	"github.com/senchabot-opensource/monorepo/apps/twitch-bot/client"
+	"github.com/senchabot-opensource/monorepo/apps/twitch-bot/internal/service"
+	"github.com/senchabot-opensource/monorepo/packages/gosenchabot/models"
 )
 
-func BotJoin(client *client.Clients, server *server.SenchabotAPIServer) {
-	channels, err := server.GetTwitchChannels(context.Background())
+func BotJoin(client *client.Clients, service service.Service) []string {
+	channels, err := service.GetTwitchChannels(context.Background())
 	if err != nil {
 		log.Fatalf("(GetTwitchChannels) Error:" + err.Error())
 	}
@@ -20,11 +20,16 @@ func BotJoin(client *client.Clients, server *server.SenchabotAPIServer) {
 		ChannelName: "senchabot",
 	})
 
+	channelList := make([]string, 0, len(channels))
+
 	fmt.Println("JOINING TO CHANNELS")
 	if len(channels) > 0 {
-		for i := 0; i < len(channels); i++ {
-			fmt.Println("TRYING TO JOIN TWITCH CHANNEL `" + channels[i].ChannelName + "`")
-			client.Twitch.Join(channels[i].ChannelName)
+		for _, channel := range channels {
+			fmt.Println("TRYING TO JOIN TWITCH CHANNEL `" + channel.ChannelName + "`")
+			client.Twitch.Join(channel.ChannelName)
+			channelList = append(channelList, channel.ChannelName)
 		}
 	}
+
+	return channelList
 }
